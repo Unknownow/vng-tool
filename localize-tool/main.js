@@ -1,8 +1,9 @@
 const fs = require("fs");
-const path = "localize-tool/testing/";
+const inputPath = "testing/";
+const outputPath = "localize/";
 const fileName = "localize.xls";
 
-const getLocalizeObject = require("./get-localize-from-file");
+const getLocalizeObject = require("./src/get-localize-from-file");
 
 const loopAllDir = async function (pathDir) {
     const files = await fs.readdirSync(pathDir, {
@@ -29,14 +30,13 @@ const loopAllDir = async function (pathDir) {
 };
 
 const main = async () => {
-    const fileObject = await loopAllDir(path, { isFirstTime: true });
+    if (!fs.existsSync(outputPath)) fs.mkdirSync(outputPath);
+    const fileObject = await loopAllDir(inputPath, { isFirstTime: true });
     for (let language in fileObject) {
-        await fs.writeFileSync(path + language, fileObject[language], {
+        await fs.writeFileSync(outputPath + language, fileObject[language], {
             encoding: "utf8",
             flag: "w+"
         });
     }
 }
 main();
-
-

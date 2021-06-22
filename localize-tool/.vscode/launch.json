@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\localize-tool\\localize-gen-tool.js",
+            "program": "${workspaceFolder}\\main.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
