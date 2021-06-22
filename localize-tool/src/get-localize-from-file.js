@@ -3,8 +3,8 @@ const addTags = require("./add-tag");
 const { keyDef } = require("./config");
 
 const getCellIndex = function (cellID = "") {
-    const rowArray = cellID.match(/\d/g);
-    const columnArray = cellID.match(/[a-zA-Z]*/g);
+    const rowArray = cellID.match(/[0-9]+/);
+    const columnArray = cellID.match(/[a-zA-Z]+/);
     return {
         row: +rowArray[rowArray.length - 1],
         column: columnArray[0],
@@ -61,7 +61,7 @@ const getLocalizeObject = async (inputFilePath) => {
 
         let fileString = "";
         Object.keys(newFile[language]).forEach((key) => {
-            fileString += key + " = " + newFile[language][key] + "\n";
+            fileString += key + " = \"" + newFile[language][key] + "\"\n";
         });
         localizeObject[language] = fileString;
     }
