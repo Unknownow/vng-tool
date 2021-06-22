@@ -1,5 +1,4 @@
 const xlsx = require("xlsx");
-const fs = require("fs");
 const addTags = require("./add-tag");
 const { keyDef } = require("./config");
 
@@ -16,9 +15,9 @@ const getCellIndex = function (cellID = "") {
  * 
  * @param {string} localizePath 
  * @param {string} outputPath 
- * @param {{flag:string}} option 
+ * @param {{flag:string, isFirstTime:boolean}} option 
  */
-const writeLocalize = async (inputFilePath, outputPath, option = { flag: "w+" }) => {
+const getLocalizeObject = async (inputFilePath) => {
     // OPEN LOCALIZE FILE!
     const localizeFile = await xlsx.readFile(inputFilePath);
     const originalSheet = localizeFile.Sheets[localizeFile.SheetNames];
@@ -50,6 +49,7 @@ const writeLocalize = async (inputFilePath, outputPath, option = { flag: "w+" })
         });
     }
 
+    const localizeObject = {};
     // WRITE TO FILE
     for (let column in newFile) {
         const language = newFile[column].language;
@@ -58,11 +58,13 @@ const writeLocalize = async (inputFilePath, outputPath, option = { flag: "w+" })
         if (language === keyDef) continue;
         newFile[language] = columnValue;
         delete newFile[language].language;
-        await fs.writeFileSync(outputPath + language + ".json", JSON.stringify(newFile[language]), {
-            encoding: "utf8",
-            flag: option.flag
+
+        let fileString = "";
+        Object.keys(newFile[language]).forEach((key) => {
+            fileString += key + " = " + newFile[language][key] + "\n";
         });
+        localizeObject[language] = fileString;
     }
-    // fs.writeFileSync(path + "all.json", JSON.stringify(newFile), "utf8");
+    return localizeObject;
 };
-module.exports = writeLocalize;
+module.exports = getLocalizeObject;
