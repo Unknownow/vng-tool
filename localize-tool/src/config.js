@@ -1,15 +1,18 @@
 const keyDef = "key";
 const richTextTag = {
-    font: "font",
-    size: "size",
     color: "color",
-    shadow: "shadow"
+    // font: "font",
+    // size: "size",
+    // shadow: "shadow"
 };
 const xmlTag = {
-    size: "sz",
-    font: "rFont",
     color: "color",
-    italic: "i",
-    shadow: "shadow"
+    // size: "sz",
+    // font: "rFont",
+    // italic: "i",
+    // shadow: "shadow"
 }
-module.exports = { keyDef, richTextTag, xmlTag };
+const defaultValue = {
+    color: "#000000",
+}
+module.exports = { keyDef, richTextTag, xmlTag, defaultValue };

@@ -1,5 +1,5 @@
 
-const { richTextTag, xmlTag } = require("./config")
+const { richTextTag, xmlTag, defaultValue } = require("./config")
 const formatTag = require("./format-tag")
 
 const regexSplitString = RegExp(/<(.*)\b[^>]*.*?<\/\1>/g);
@@ -45,17 +45,21 @@ const addTags = (text) => {
             else countTagObject[key][obj.tag[key]] += 1;
         })
     })
-    Object.keys(countTagObject).forEach(key => {
-        const obj = countTagObject[key];
-        const maxKey = Object.keys(obj).sort((a, b) => obj[a] - obj[b]).pop();
-        countTagObject[key] = maxKey;
-    })
+    // Object.keys(countTagObject).forEach(key => {
+    //     const obj = countTagObject[key];
+    //     const maxKey = Object.keys(obj).sort((a, b) => obj[a] - obj[b]).pop();
+    //     countTagObject[key] = maxKey;
+    // })
 
     subStringObjects.forEach(obj => {
         const tagObject = obj.tag;
-        Object.keys(tagObject).forEach(key => {
-            if (tagObject[key] === countTagObject[key]) delete tagObject[key];
+        // DELETE DEFAULT VALUE
+        Object.keys(richTextTag).forEach(key => {
+            if (tagObject[key] === defaultValue[key]) delete tagObject[key];
         })
+        // Object.keys(tagObject).forEach(key => {
+        //     if (tagObject[key] === countTagObject[key]) delete tagObject[key];
+        // })
         if (Object.keys(tagObject).length === 0) delete obj.tag;
     })
 
