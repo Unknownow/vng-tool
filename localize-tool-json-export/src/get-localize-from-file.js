@@ -56,14 +56,9 @@ const getLocalizeObject = async (inputFilePath) => {
         const columnValue = newFile[column];
         delete newFile[column];
         if (language === keyDef) continue;
-        newFile[language] = columnValue;
-        delete newFile[language].language;
 
-        let fileString = "";
-        Object.keys(newFile[language]).forEach((key) => {
-            fileString += key + " = \"" + newFile[language][key] + "\"\n";
-        });
-        localizeObject[language] = fileString;
+        localizeObject[language] = columnValue;
+        delete localizeObject[language].language;
     }
     console.log("DONE READING FILE " + inputFilePath);
     return localizeObject;
