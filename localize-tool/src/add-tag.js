@@ -76,7 +76,7 @@ const addTags = (text) => {
         })
         finalString += preString + value + postString;
     })
-    return finalString.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/__n/g, "\n");
+    return finalString.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/__n/g, "\\n");
 }
 
 module.exports = addTags;
