@@ -1,4 +1,3 @@
-const keyDef = "key";
 const richTextTag = {
     color: "color",
     // font: "font",
@@ -15,4 +14,4 @@ const xmlTag = {
 const defaultValue = {
     color: "#000000",
 }
-module.exports = { keyDef, richTextTag, xmlTag, defaultValue };
+module.exports = { richTextTag, xmlTag, defaultValue };
