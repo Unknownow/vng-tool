@@ -104,4 +104,5 @@ dist
 .tern-port
 
 *test*
+*output*
 package-lock.json
