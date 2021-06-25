@@ -1,4 +1,3 @@
-const { error } = require("console");
 const fs = require("fs/promises");
 const getLocalizeObject = require("./src/get-localize-from-file");
 
@@ -6,7 +5,7 @@ const getLocalizeObject = require("./src/get-localize-from-file");
  * Input, output
  */
 const inputPath = "testing/";
-const outputPath = "localize/";
+const outputPath = "test-localize/";
 const fileName = "localize.xls";
 
 const loopAllDir = async function (pathDir) {
