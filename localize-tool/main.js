@@ -1,4 +1,5 @@
-const fs = require("fs");
+const { error } = require("console");
+const fs = require("fs/promises");
 const getLocalizeObject = require("./src/get-localize-from-file");
 
 /**
@@ -8,42 +9,37 @@ const inputPath = "testing/";
 const outputPath = "localize/";
 const fileName = "localize.xls";
 
-
 const loopAllDir = async function (pathDir) {
-    const files = await fs.readdirSync(pathDir, {
+    const files = await fs.readdir(pathDir, {
         encoding: "utf-8",
         withFileTypes: true
     });
 
-    const fileObject = {};
+    const fileList = files.filter(file => file.name === fileName).map(file => getLocalizeObject(pathDir + file.name));
+    const folderList = files.filter(file => file.isDirectory()).map(file => loopAllDir(pathDir + file.name + "/"));
 
+    const fileObject = {};
     const addToFileObject = (localizeObject) => {
-        const keys = Object.keys(localizeObject);// }
+        const keys = Object.keys(localizeObject);
         keys.forEach(key => {
             if (!fileObject[key]) fileObject[key] = "";
             fileObject[key] += localizeObject[key];
         })
     };
-    for (const file of files) {
-        if (file.name === fileName)
-            addToFileObject(await getLocalizeObject(pathDir + fileName))
-        if (file.isDirectory())
-            addToFileObject(await loopAllDir(pathDir + file.name + "/"))
-    }
+
+    await Promise.all([...fileList, ...folderList]).then(results => results.forEach((addToFileObject)));
     return fileObject;
 };
 
 const main = async () => {
-    if (!fs.existsSync(outputPath)) fs.mkdirSync(outputPath);
+    await fs.access(outputPath).catch(async reason => reason.code === "ENOENT" ? await fs.mkdir(outputPath) : "");
     const fileObject = await loopAllDir(inputPath, { isFirstTime: true });
     console.log("");
     for (let language in fileObject) {
-        await fs.writeFileSync(outputPath + language, fileObject[language], {
+        fs.writeFile(outputPath + language, fileObject[language], {
             encoding: "utf8",
             flag: "w+"
-        });
-        console.log("DONE WRITING TO FILES " + outputPath + language);
+        }).then(() => console.log("DONE WRITING TO FILES " + outputPath + language));
     }
-    console.log("\nLOCALIZE CAN BE FOUND IN: " + outputPath);
 }
 main();
