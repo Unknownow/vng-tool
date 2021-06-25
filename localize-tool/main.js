@@ -13,6 +13,6 @@ const main = async () => {
     await fs.access(outputPath).catch(async reason => reason.code === "ENOENT" ? await fs.mkdir(outputPath) : "");
     const languagesObject = await getLanguagesObject(inputPath, fileName);
     const formattedLanguagesObject = formatLanguagesObject(languagesObject, currentFormat);
-    writeWithFormat(outputPath, formattedLanguagesObject, currentFormat).then(() => console.log("DONE!"));
+    writeWithFormat(outputPath, formattedLanguagesObject, currentFormat).then(() => console.log("-----------------------------------------------\nDONE!"));
 }
 main();

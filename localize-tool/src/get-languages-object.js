@@ -61,6 +61,7 @@ const getLanguagesObjectInFile = async (inputFilePath) => {
         languagesObject[language] = columnValue;
         delete languagesObject[language].language;
     }
+    console.log("DONE GET LOCALIZE IN FILE " + inputFilePath);
     return languagesObject;
 };
 const getLanguagesObject = async function (pathDir, fileName) {
@@ -80,6 +81,7 @@ const getLanguagesObject = async function (pathDir, fileName) {
         })
     };
     await Promise.all([...fileList, ...folderList]).then(results => results.forEach(addToFileObject));
+    console.log("-----------------------------------------------");
     return fileObject;
 };
 
