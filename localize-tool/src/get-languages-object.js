@@ -81,7 +81,6 @@ const getLanguagesObject = async function (pathDir, fileName) {
         })
     };
     await Promise.all([...fileList, ...folderList]).then(results => results.forEach(addToFileObject));
-    console.log("-----------------------------------------------");
     return fileObject;
 };
 
