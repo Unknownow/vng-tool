@@ -3,10 +3,10 @@ const { format } = require("./src/format");
 /**
  * Input, output
  */
-const inputPath = "test-localize-xls/";
-const outputPath = "text-localize-files/";
+const inputPath = "input/";
+const outputPath = "output/";
 const fileName = "localize.xls";
-const currentFormat = format.type.ELEMENT;
+const currentFormat = format.type.STRING;
 
 module.exports = {
     inputPath,
